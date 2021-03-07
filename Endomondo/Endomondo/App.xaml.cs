@@ -1,5 +1,7 @@
-﻿using Endomondo.ViewModels;
+﻿using Endomondo.DataAccess;
+using Endomondo.ViewModels;
 using Endomondo.Views;
+using Microsoft.EntityFrameworkCore;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
@@ -16,11 +18,18 @@ namespace Endomondo
         {
             InitializeComponent();
 
+            using (var dataContext = new DataContext())
+            {
+                await dataContext.Database.MigrateAsync();
+            }
+
             await NavigationService.NavigateAsync("HomePage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.Register<DbContext, DataContext>();
+            containerRegistry.Register<IRouteRepository, RouteRepository>();
             containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
         }
     }

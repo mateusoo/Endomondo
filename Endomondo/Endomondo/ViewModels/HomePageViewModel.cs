@@ -1,14 +1,28 @@
-﻿using Prism.Navigation;
+﻿using System;
+using Endomondo.DataAccess;
+using Endomondo.Models;
+using Prism.Navigation;
 
 namespace Endomondo.ViewModels
 {
-    public class HomePageViewModel
+    public class HomePageViewModel : ViewModelBase
     {
-        private INavigationService _navigationService;
+        private IRouteRepository _routeRepository;
 
-        public HomePageViewModel(INavigationService navigationService)
+        public HomePageViewModel(INavigationService navigationService, 
+            IRouteRepository routeRepository) : base(navigationService)
+        { 
+            _routeRepository = routeRepository;
+        }
+
+        public override async void Initialize(INavigationParameters parameters)
         {
-            _navigationService = navigationService;
+            //TEST
+            //await _routeRepository.AddAsync(new Route() {Duration = 30, Date = DateTime.Today});
+
+            //var x = await _routeRepository.GetAsync(1);
+
+            //var y = await _routeRepository.GetAllAsync();
         }
     }
 }
