@@ -22,15 +22,20 @@ namespace Endomondo
             {
                 await dataContext.Database.MigrateAsync();
             }
-
+            
             await NavigationService.NavigateAsync("HomePage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<DbContext, DataContext>();
+
             containerRegistry.Register<IRouteRepository, RouteRepository>();
+
             containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
+            containerRegistry.RegisterForNavigation<TrackingPage, TrackingPageViewModel>();
+            containerRegistry.RegisterForNavigation<ResultPage, ResultPageViewModel>();
+            containerRegistry.RegisterForNavigation<HistoryPage, HistoryPageViewModel>();
         }
     }
 }
