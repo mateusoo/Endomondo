@@ -8,7 +8,7 @@ namespace Endomondo.DataAccess
 {
     public class DataContext : DbContext
     {
-        public DbSet<Route> Routes { get; set; }
+        public DbSet<Journey> Journeys { get; set; }
 
         public DbSet<Location> Locations { get; set; }
 
@@ -16,7 +16,7 @@ namespace Endomondo.DataAccess
         {
             string dbPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.Personal), 
-                "EndomondoV2.db3");
+                "Endomondo.db3");
 
             optionsBuilder.UseSqlite($"Filename={dbPath}");
         }

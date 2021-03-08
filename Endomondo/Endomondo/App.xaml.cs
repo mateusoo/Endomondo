@@ -30,7 +30,7 @@ namespace Endomondo
         {
             containerRegistry.Register<DbContext, DataContext>();
 
-            containerRegistry.Register<IRouteRepository, RouteRepository>();
+            containerRegistry.Register<IJourneyRepository, JourneyRepository>();
 
             containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
             containerRegistry.RegisterForNavigation<TrackingPage, TrackingPageViewModel>();

@@ -8,16 +8,16 @@ namespace Endomondo.ViewModels
 {
     public class HomePageViewModel : ViewModelBase
     {
-        private readonly IRouteRepository _routeRepository;
+        private readonly IJourneyRepository _journeyRepository;
 
         public DelegateCommand StartCommand { get; }
 
         public DelegateCommand NavigateToHistoryCommand { get; set; }
 
         public HomePageViewModel(INavigationService navigationService,
-            IRouteRepository routeRepository) : base(navigationService)
+            IJourneyRepository journeyRepository) : base(navigationService)
         {
-            _routeRepository = routeRepository;
+            _journeyRepository = journeyRepository;
 
             StartCommand = new DelegateCommand(StartAsync);
             NavigateToHistoryCommand = new DelegateCommand(NavigateToHistoryAsync);
@@ -26,11 +26,11 @@ namespace Endomondo.ViewModels
         public override async void Initialize(INavigationParameters parameters)
         {
             //TEST
-            //await _routeRepository.AddAsync(new Route() { Duration = 30, Date = DateTime.Today});
+            //await _journeyRepository.AddAsync(new Journey() { Duration = 30, DateTime = DateTime.Now});
 
-            //var x = await _routeRepository.GetAsync(1);
+            //var x = await _journeyRepository.GetAsync(1);
 
-            //var y = await _routeRepository.GetAllAsync();
+            //var y = await _journeyRepository.GetAllAsync();
         }
 
         private async void StartAsync()

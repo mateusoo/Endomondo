@@ -3,13 +3,15 @@ using System.Collections.Generic;
 
 namespace Endomondo.Models
 {
-    public class Route
+    public class Journey
     {
         public int Id { get; set; }
 
         public double Duration { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime DateTime { get; set; }
+
+        public double Distance { get; set; }
 
 
         public IList<Location> Locations { get; set; }
