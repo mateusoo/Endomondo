@@ -78,8 +78,8 @@ namespace Endomondo.ViewModels
 
             await _journeyRepository.UpdateAsync(Journey);
 
-            var testText = locationMessage.WriteTime + "  | " + locationMessage.Latitude
-                           + " | " + locationMessage.Longitude;
+            var testText = Journey.Id + " | " + locationMessage.WriteTime + " | " 
+                           + locationMessage.Latitude + " | " + locationMessage.Longitude;
             TestData.Add(new TestModel() { Text = testText });
 
             _alarm.SetAlarmForBackgroundServices(10);

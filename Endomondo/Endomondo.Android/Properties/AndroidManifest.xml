@@ -3,6 +3,9 @@
   <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
   <application android:label="Endomondo.Android" android:theme="@style/MainTheme">
     <receiver android:name=".BackgroundReceiver" android:enabled="true"/>
+    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyD28irVw17EO6-Wu9CVMN2zf3L6DlRa5tA" />
+    <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+    <uses-library android:name="org.apache.http.legacy" android:required="false" />
   </application>
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

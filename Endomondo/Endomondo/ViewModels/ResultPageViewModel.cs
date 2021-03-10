@@ -7,6 +7,8 @@ using System.Linq;
 using Endomondo.DataAccess;
 using Endomondo.Models;
 using Prism.Navigation;
+using Xamarin.Forms;
+using Xamarin.Forms.Maps;
 
 namespace Endomondo.ViewModels
 {
@@ -14,8 +16,7 @@ namespace Endomondo.ViewModels
     {
         private readonly IJourneyRepository _journeyRepository;
 
-        public ObservableCollection<TestModel> Locations { get; set; }
-            = new ObservableCollection<TestModel>();
+        public Polyline Polyline { get; set; } = new Polyline();
 
         public ResultPageViewModel(INavigationService navigationService,
             IJourneyRepository journeyRepository)
@@ -30,10 +31,22 @@ namespace Endomondo.ViewModels
 
             var journey = await _journeyRepository.GetAsync(journeyId);
 
-            foreach (var location in journey.Locations)
+            var locations = journey.Locations
+                .Select(l => new Position(l.Latitude, l.Longitude))
+                .ToList();
+
+            Polyline = new Polyline
             {
-                Locations.Add(new TestModel() {Text = location.ToString()});
+                StrokeColor = Color.Coral,
+                StrokeWidth = 12
+            };
+
+            foreach (var location in locations)
+            {
+                Polyline.Geopath.Add(location);
             }
+
+            RaisePropertyChanged("Polyline");
         }
     }
 }

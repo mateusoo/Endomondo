@@ -18,13 +18,18 @@ namespace Endomondo.Models
         public Journey Journey { get; set; }
 
 
+        public Location(double latitude, double longitude)
+        {
+            Latitude = latitude;
+            Longitude = longitude;
+        }
+
         public Location(double latitude, double longitude, DateTime writeTime)
         {
             Latitude = latitude;
             Longitude = longitude;
             WriteTime = writeTime;
         }
-
 
         public override string ToString()
         {

@@ -3,17 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Endomondo.Views.ResultPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <ListView x:Name="ListView"
-                      ItemsSource="{Binding Locations}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Text}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
-    </ContentPage.Content>
+             x:Class="Endomondo.Views.ResultPage"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             xmlns:infrastructure="clr-namespace:Endomondo.Infrastructure;assembly=Endomondo">
+
+    <infrastructure:CustomMap CustomPolyline="{Binding Polyline}">
+        <x:Arguments>
+            <maps:MapSpan>
+                <x:Arguments>
+                    <maps:Position>
+                        <x:Arguments>
+                            <x:Double>51.246452</x:Double>
+                            <x:Double>22.568445</x:Double>
+                        </x:Arguments>
+                    </maps:Position>
+                    <x:Double>0.1</x:Double>
+                    <x:Double>0.1</x:Double>
+                </x:Arguments>
+            </maps:MapSpan>
+        </x:Arguments>
+    </infrastructure:CustomMap>
 </ContentPage>

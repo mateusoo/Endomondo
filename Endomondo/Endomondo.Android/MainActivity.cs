@@ -20,7 +20,8 @@ namespace Endomondo.Droid
             base.OnCreate(savedInstanceState);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            Xamarin.FormsMaps.Init(this, savedInstanceState);
             LoadApplication(new App(new AndroidInitializer()));
 
             SetUpPermission();
@@ -32,7 +33,11 @@ namespace Endomondo.Droid
                 Manifest.Permission.AccessFineLocation) != (int)Permission.Granted)
             {
                 ActivityCompat.RequestPermissions(this,
-                    new string[] { Manifest.Permission.AccessFineLocation }, 0);
+                    new string[]
+                    {
+                        Manifest.Permission.AccessFineLocation,
+                        Manifest.Permission.AccessCoarseLocation
+                    }, 0);
             }
         }
 
