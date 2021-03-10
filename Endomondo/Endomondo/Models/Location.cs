@@ -16,5 +16,19 @@ namespace Endomondo.Models
         public int JoruneyId { get; set; }
 
         public Journey Journey { get; set; }
+
+
+        public Location(double latitude, double longitude, DateTime writeTime)
+        {
+            Latitude = latitude;
+            Longitude = longitude;
+            WriteTime = writeTime;
+        }
+
+
+        public override string ToString()
+        {
+            return Journey.Id + " | " + WriteTime + " | " + Latitude + " | " + Longitude;
+        }
     }
 }

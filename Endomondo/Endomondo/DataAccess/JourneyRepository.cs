@@ -16,7 +16,9 @@ namespace Endomondo.DataAccess
 
         public async Task<Journey> GetAsync(int id)
         {
-            return await _context.Journeys.SingleOrDefaultAsync(r => r.Id == id);
+            return await _context.Journeys
+                .Include(j => j.Locations)
+                .SingleOrDefaultAsync(r => r.Id == id);
         }
 
         public async Task<IEnumerable<Journey>> GetAllAsync()
@@ -27,6 +29,12 @@ namespace Endomondo.DataAccess
         public async Task AddAsync(Journey journey)
         {
             await _context.AddAsync(journey);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Journey journey)
+        {
+            _context.Update(journey);
             await _context.SaveChangesAsync();
         }
     }

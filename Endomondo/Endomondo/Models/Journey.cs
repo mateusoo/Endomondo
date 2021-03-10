@@ -15,5 +15,12 @@ namespace Endomondo.Models
 
 
         public IList<Location> Locations { get; set; }
+
+
+        public Journey(DateTime dateTime)
+        {
+            DateTime = dateTime;
+            Locations = new List<Location>();
+        }
     }
 }

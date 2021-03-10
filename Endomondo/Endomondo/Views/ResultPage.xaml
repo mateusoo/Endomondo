@@ -6,9 +6,14 @@
              x:Class="Endomondo.Views.ResultPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Results"
-                   VerticalOptions="CenterAndExpand" 
-                   HorizontalOptions="CenterAndExpand" />
+            <ListView x:Name="ListView"
+                      ItemsSource="{Binding Locations}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Text}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

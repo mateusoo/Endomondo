@@ -6,9 +6,14 @@
              x:Class="Endomondo.Views.TrackingPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Work in progress... "
-                   VerticalOptions="CenterAndExpand" 
-                   HorizontalOptions="CenterAndExpand" />
+            <ListView x:Name="ListView"
+                      ItemsSource="{Binding TestData}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Text}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             <Button Text="Stop" Command="{Binding StopCommand}"/>
         </StackLayout>
     </ContentPage.Content>
