@@ -1,16 +1,83 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Endomondo.Views.HomePage"
-             xmlns:prism="http://prismlibrary.com"
-             prism:ViewModelLocator.AutowireViewModel="True">
+<ContentPage
+    x:Class="Endomondo.Views.HomePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
+    xmlns:image="clr-namespace:Endomondo.Images"
+    xmlns:prism="http://prismlibrary.com"
+    prism:ViewModelLocator.AutowireViewModel="True">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!--  Binding context for forgot password page  -->
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <Button Text="Start" Command="{Binding StartCommand}"/>
-            <Button Text="History" Command="{Binding NavigateToHistoryCommand}"/>
-        </StackLayout>
+        <ScrollView HorizontalOptions="Center">
+            <ScrollView.VerticalOptions>
+                <OnIdiom
+                    x:TypeArguments="LayoutOptions"
+                    Default="CenterAndExpand"
+                    Phone="FillAndExpand" />
+            </ScrollView.VerticalOptions>
+
+            <StackLayout
+                Margin="{core:OnPlatformOrientationThickness PhonePortrait='20,32',
+                                                             PhoneLandscape='150,32',
+                                                             TabletPortrait='200,50',
+                                                             TabletLandscape='300,50',
+                                                             Desktop='30'}"
+                Spacing="0"
+                VerticalOptions="FillAndExpand">
+
+                <Grid RowSpacing="24" VerticalOptions="CenterAndExpand">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Label
+                        Grid.Row="0"
+                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                        FontSize="30"
+                        HorizontalOptions="Center"
+                        Style="{StaticResource LabelStyle}"
+                        Text="ENDOMONDO v2"
+                        TextColor="{DynamicResource Gray-900}"
+                        VerticalTextAlignment="End" />
+
+                    <Frame
+                        Grid.Row="1"
+                        Padding="0"
+                        HasShadow="false"
+                        HeightRequest="175"
+                        WidthRequest="125">
+                        <Image
+                            Grid.Row="1"
+                            Margin="1"
+                            Source="{image:ImageResource Endomondo.Images.ManRunning.png}"
+                            VerticalOptions="Center" />
+                    </Frame>
+
+
+                    <buttons:SfButton
+                        Grid.Row="2"
+                        Command="{Binding StartCommand}"
+                        CornerRadius="20"
+                        Style="{StaticResource SfButtonStyle}"
+                        Text="Start" />
+
+                </Grid>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
