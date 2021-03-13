@@ -12,6 +12,8 @@ namespace Endomondo
     {
         public App(IPlatformInitializer initializer) : base(initializer)
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDExNjM1QDMxMzgyZTM0MmUzMG1KY1puUUNzSWZIbVpzcEhwNjRVc05wRFdML0xhcHZrQjVScjBxeUNXSmM9");
+            MainPage = new Endomondo.Views.Navigation.BottomNavigationPage();
         }
 
         protected override async void OnInitialized()
@@ -23,7 +25,7 @@ namespace Endomondo
                 await dataContext.Database.MigrateAsync();
             }
             
-            await NavigationService.NavigateAsync("HomePage");
+            //await NavigationService.NavigateAsync("HomePage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
