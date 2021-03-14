@@ -23,16 +23,6 @@ namespace Endomondo.ViewModels
             NavigateToHistoryCommand = new DelegateCommand(NavigateToHistoryAsync);
         }
 
-        public override async void Initialize(INavigationParameters parameters)
-        {
-            //TEST
-            //await _journeyRepository.AddAsync(new Journey() { Duration = 30, DateTime = DateTime.Now});
-
-            //var x = await _journeyRepository.GetAsync(1);
-
-            //var y = await _journeyRepository.GetAllAsync();
-        }
-
         private async void StartAsync()
         {
             await NavigationService.NavigateAsync("TrackingPage");

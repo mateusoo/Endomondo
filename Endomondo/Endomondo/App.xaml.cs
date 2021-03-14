@@ -1,6 +1,8 @@
-﻿using Endomondo.DataAccess;
+﻿using System.Threading.Tasks;
+using Endomondo.DataAccess;
 using Endomondo.ViewModels;
 using Endomondo.Views;
+using Endomondo.Views.Navigation;
 using Microsoft.EntityFrameworkCore;
 using Prism;
 using Prism.Ioc;
@@ -12,20 +14,19 @@ namespace Endomondo
     {
         public App(IPlatformInitializer initializer) : base(initializer)
         {
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDExNjM1QDMxMzgyZTM0MmUzMG1KY1puUUNzSWZIbVpzcEhwNjRVc05wRFdML0xhcHZrQjVScjBxeUNXSmM9");
-            MainPage = new Endomondo.Views.Navigation.BottomNavigationPage();
+
         }
 
         protected override async void OnInitialized()
         {
             InitializeComponent();
 
-            using (var dataContext = new DataContext())
+            await using (var dataContext = new DataContext())
             {
                 await dataContext.Database.MigrateAsync();
             }
-            
-            //await NavigationService.NavigateAsync("HomePage");
+
+            await NavigationService.NavigateAsync("BottomNavigationPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -34,6 +35,7 @@ namespace Endomondo
 
             containerRegistry.Register<IJourneyRepository, JourneyRepository>();
 
+            containerRegistry.RegisterForNavigation<BottomNavigationPage, BottomNavigationPageViewModel>();
             containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
             containerRegistry.RegisterForNavigation<TrackingPage, TrackingPageViewModel>();
             containerRegistry.RegisterForNavigation<ResultPage, ResultPageViewModel>();

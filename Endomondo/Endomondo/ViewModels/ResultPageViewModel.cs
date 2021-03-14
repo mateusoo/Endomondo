@@ -16,7 +16,17 @@ namespace Endomondo.ViewModels
     {
         private readonly IJourneyRepository _journeyRepository;
 
-        public Polyline Polyline { get; set; } = new Polyline();
+        private Polyline _polyline;
+
+        public Polyline Polyline
+        {
+            get => _polyline;
+            set
+            {
+                _polyline = value;
+                RaisePropertyChanged("Polyline");
+            }
+        }
 
         public ResultPageViewModel(INavigationService navigationService,
             IJourneyRepository journeyRepository)
@@ -45,13 +55,11 @@ namespace Endomondo.ViewModels
             {
                 Polyline.Geopath.Add(location);
             }
-
-            RaisePropertyChanged("Polyline");
         }
 
         public async void NavigateHomeAsync()
         {
-            await NavigationService.NavigateAsync("HomePage");
+            await NavigationService.NavigateAsync("BottomNavigationPage");
         }
     }
 }

@@ -7,10 +7,22 @@
     prism:ViewModelLocator.AutowireViewModel="True">
     <ContentPage.Content>
         <StackLayout>
-            <Label
-                HorizontalOptions="CenterAndExpand"
-                Text="History"
-                VerticalOptions="CenterAndExpand" />
+            <ListView x:Name="ListView" 
+                      ItemsSource="{Binding Journeys}" 
+                      ItemSelected="OnItemSelection">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Id}"/>
+                                    <Label Text="{Binding DateTime}"  />
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
