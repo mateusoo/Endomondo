@@ -13,7 +13,7 @@ namespace Endomondo.Models
         public DateTime WriteTime { get; set; }
 
 
-        public int JoruneyId { get; set; }
+        public int JourneyId { get; set; }
 
         public Journey Journey { get; set; }
 
