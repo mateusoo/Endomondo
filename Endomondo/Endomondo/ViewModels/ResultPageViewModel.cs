@@ -48,5 +48,10 @@ namespace Endomondo.ViewModels
 
             RaisePropertyChanged("Polyline");
         }
+
+        public async void NavigateHomeAsync()
+        {
+            await NavigationService.NavigateAsync("HomePage");
+        }
     }
 }
