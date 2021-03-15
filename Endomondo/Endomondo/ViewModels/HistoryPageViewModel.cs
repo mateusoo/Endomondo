@@ -8,11 +8,15 @@ using System.Threading.Tasks;
 using Endomondo.DataAccess;
 using Endomondo.Models;
 using Prism.Navigation;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Endomondo.ViewModels
 {
     public class HistoryPageViewModel : ViewModelBase
     {
+        public ICommand Command { get; set; }
+
         private readonly IJourneyRepository _journeyRepository;
 
         private ObservableCollection<Journey> _journeys;
@@ -32,6 +36,13 @@ namespace Endomondo.ViewModels
             : base(navigationService)
         {
             _journeyRepository = journeyRepository;
+            Command = new Command(Execute);
+        }
+
+        public async void Execute()
+        {
+            await NavigationService.NavigateAsync("TrackingPage");
+
         }
 
         public async Task LoadJourneysAsync()

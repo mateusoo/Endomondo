@@ -3,21 +3,60 @@
     x:Class="Endomondo.Views.HistoryPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:control="clr-namespace:Endomondo.Controls"
+    xmlns:helper="clr-namespace:Endomondo.Helpers"
+    xmlns:image="clr-namespace:Endomondo.Images"
     xmlns:prism="http://prismlibrary.com"
+    x:Name="ThisPage"
     prism:ViewModelLocator.AutowireViewModel="True">
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="ListView" 
-                      ItemsSource="{Binding Journeys}" 
-                      ItemSelected="OnItemSelection">
+            <ListView
+                x:Name="ListView"
+                ItemSelected="OnItemSelection"
+                ItemsSource="{Binding Journeys}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding Id}"/>
-                                    <Label Text="{Binding DateTime}"  />
-                                </StackLayout>
+                                <control:CustomShadowFrame
+                                    Margin="0"
+                                    Padding="0"
+                                    BackgroundColor="{DynamicResource Gray-White}"
+                                    BorderColor="{DynamicResource Gray-White}"
+                                    CornerRadius="4"
+                                    HasShadow="True"
+                                    HeightRequest="80">
+                                    <StackLayout
+                                        Padding="0"
+                                        helper:RTLHelper.Margin="20,10,20,10"
+                                        Orientation="Horizontal"
+                                        Spacing="0">
+                                        <Label
+                                            FontFamily="{StaticResource Montserrat-SemiBold}"
+                                            FontSize="16"
+                                            HorizontalOptions="StartAndExpand"
+                                            Text="{Binding Id}"
+                                            TextColor="{DynamicResource Gray-900}" />
+
+                                        <Label
+                                            FontFamily="{StaticResource Montserrat-SemiBold}"
+                                            FontSize="16"
+                                            HorizontalOptions="CenterAndExpand"
+                                            HorizontalTextAlignment="Center"
+                                            Text="{Binding DateTime}"
+                                            TextColor="{DynamicResource Gray-900}" />
+
+                                        <ImageButton
+                                            BackgroundColor="White"
+                                            Command="{Binding Source={x:Reference ThisPage}, Path=BindingContext.Command}"
+                                            HeightRequest="20"
+                                            Source="{image:ImageResource Endomondo.Images.deleteIcon.jpg}"
+                                            WidthRequest="20" />
+
+                                    </StackLayout>
+                                </control:CustomShadowFrame>
+
                             </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>

@@ -11,10 +11,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\deleteIcon.jpg" />
     <None Remove="Images\ManRunning.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Images\deleteIcon.jpg" />
     <EmbeddedResource Include="Images\ManRunning.png" />
   </ItemGroup>
 
@@ -26,6 +28,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.3" />
     <PackageReference Include="Prism.Unity.Forms" Version="8.0.0.1909" />
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.4.0.47" />
+    <PackageReference Include="Syncfusion.Xamarin.Cards" Version="18.4.0.47" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.4.0.47" />
     <PackageReference Include="Syncfusion.Xamarin.DataSource" Version="18.4.0.47" />
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="18.4.0.47" />
