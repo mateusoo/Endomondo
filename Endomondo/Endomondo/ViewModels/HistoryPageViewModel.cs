@@ -15,9 +15,19 @@ namespace Endomondo.ViewModels
 {
     public class HistoryPageViewModel : ViewModelBase
     {
-        public ICommand Command { get; set; }
-
         private readonly IJourneyRepository _journeyRepository;
+
+        public ICommand RemoveCommand
+        {
+            get
+            {
+                return new Command((e) =>
+                {
+                    var journey = (e as Journey);
+                    RemoveJourneyAsync(journey);
+                });
+            }
+        }
 
         private ObservableCollection<Journey> _journeys;
 
@@ -36,13 +46,6 @@ namespace Endomondo.ViewModels
             : base(navigationService)
         {
             _journeyRepository = journeyRepository;
-            Command = new Command(Execute);
-        }
-
-        public async void Execute()
-        {
-            await NavigationService.NavigateAsync("TrackingPage");
-
         }
 
         public async Task LoadJourneysAsync()
@@ -60,6 +63,12 @@ namespace Endomondo.ViewModels
             };
 
             await NavigationService.NavigateAsync("ResultPage", navigationParameters);
+        }
+
+        public async void RemoveJourneyAsync(Journey journeyToRemove)
+        {
+            await _journeyRepository.RemoveAsync(journeyToRemove);
+            Journeys.Remove(journeyToRemove);
         }
     }
 }

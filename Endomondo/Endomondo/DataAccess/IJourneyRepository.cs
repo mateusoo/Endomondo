@@ -13,5 +13,7 @@ namespace Endomondo.DataAccess
         Task AddAsync(Journey journey);
 
         Task UpdateAsync(Journey journey);
+
+        Task RemoveAsync(Journey journey);
     }
 }

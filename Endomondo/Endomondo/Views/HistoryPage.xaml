@@ -31,7 +31,8 @@
                                         Padding="0"
                                         helper:RTLHelper.Margin="20,10,20,10"
                                         Orientation="Horizontal"
-                                        Spacing="0">
+                                        Spacing="0"
+                                        x:Name="Item">
                                         <Label
                                             FontFamily="{StaticResource Montserrat-SemiBold}"
                                             FontSize="16"
@@ -49,7 +50,8 @@
 
                                         <ImageButton
                                             BackgroundColor="White"
-                                            Command="{Binding Source={x:Reference ThisPage}, Path=BindingContext.Command}"
+                                            Command="{Binding Source={x:Reference ThisPage}, Path=BindingContext.RemoveCommand}"
+                                            CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}"
                                             HeightRequest="20"
                                             Source="{image:ImageResource Endomondo.Images.deleteIcon.jpg}"
                                             WidthRequest="20" />

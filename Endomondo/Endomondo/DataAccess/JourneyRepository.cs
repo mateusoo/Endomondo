@@ -37,5 +37,11 @@ namespace Endomondo.DataAccess
             _context.Update(journey);
             await _context.SaveChangesAsync();
         }
+
+        public async Task RemoveAsync(Journey journey)
+        {
+            _context.Journeys.Remove(journey);
+            await _context.SaveChangesAsync();
+        }
     }
 }
