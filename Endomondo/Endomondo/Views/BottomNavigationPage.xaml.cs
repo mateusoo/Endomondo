@@ -12,5 +12,10 @@ namespace Endomondo.Views.Navigation
         {
             InitializeComponent();
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
     }
 }

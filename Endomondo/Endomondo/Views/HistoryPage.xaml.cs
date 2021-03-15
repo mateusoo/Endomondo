@@ -32,5 +32,10 @@ namespace Endomondo.Views
 
             _viewModel.ShowJourneyResultAsync(selectedItem.Id);
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
     }
 }
