@@ -10,12 +10,16 @@ using Endomondo.Infrastructure;
 using Endomondo.Messages;
 using Endomondo.Models;
 using Prism.Navigation;
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using Location = Endomondo.Models.Location;
 
 namespace Endomondo.ViewModels
 {
     public class TrackingPageViewModel : ViewModelBase
     {
+        private const int DelayTimeInSeconds = 20;
+
         private readonly IAlarm _alarm;
         private readonly IJourneyRepository _journeyRepository;
         private bool _isBackgroundTaskRunning;
@@ -25,6 +29,18 @@ namespace Endomondo.ViewModels
         public Journey Journey { get; set; }
 
         public DelegateCommand StopCommand { get; }
+
+        private double _distance;
+
+        public double Distance
+        {
+            get => _distance;
+            set
+            {
+                _distance = value;
+                RaisePropertyChanged("Distance");
+            }
+        }
 
         public TrackingPageViewModel(INavigationService navigationService, IAlarm alarm,
             IJourneyRepository journeyRepository)
@@ -76,13 +92,62 @@ namespace Endomondo.ViewModels
             Journey.Locations.Add(new Location(locationMessage.Latitude,
                 locationMessage.Longitude, locationMessage.WriteTime));
 
-            await _journeyRepository.UpdateAsync(Journey);
+            var distanceFromLatestLocation =
+                CalculateDistanceFromLatestLocation(locationMessage.Latitude, locationMessage.Longitude);
 
-            var testText = Journey.Id + " | " + locationMessage.WriteTime + " | " 
+            if (Journey.Locations.Count == 1 || distanceFromLatestLocation > 4)
+            {
+                Journey.Distance += distanceFromLatestLocation;
+                Distance = Journey.Distance;
+
+                await _journeyRepository.UpdateAsync(Journey);
+            }
+
+            var testText = Journey.Id + " | " + Math.Round(distanceFromLatestLocation, 2) + " | " + locationMessage.WriteTime + " | "
                            + locationMessage.Latitude + " | " + locationMessage.Longitude;
             TestData.Add(new TestModel() { Text = testText });
 
-            _alarm.SetAlarmForBackgroundServices(10);
+            _alarm.SetAlarmForBackgroundServices(DelayTimeInSeconds);
         }
+
+        private double CalculateDistanceFromLatestLocation(double latitude, double longitude)
+        {
+            var latestLocation = Journey.Locations.OrderBy(l => l.WriteTime).FirstOrDefault();
+
+            if (latestLocation == null)
+                return 0;
+
+            return Xamarin.Essentials.Location.CalculateDistance(latestLocation.Latitude,
+                latestLocation.Longitude, latitude,
+                longitude, DistanceUnits.Kilometers) * 1000;
+        }
+
+        //private async void CalculateDistanceForExistingJourneys()
+        //{
+        //    var journeys = await _journeyRepository.GetAllWithLocationsAsync();
+
+        //    foreach (var journey in journeys)
+        //    {
+        //        journey.Distance = 0;
+
+        //        for (int i = 1; i < journey.Locations.Count; i++)
+        //        {
+        //            var previousLocation = journey.Locations[i - 1];
+        //            var location = journey.Locations[i];
+
+        //            var distance = Xamarin.Essentials.Location.CalculateDistance(previousLocation.Latitude,
+        //                previousLocation.Longitude, location.Latitude,
+        //                location.Longitude, DistanceUnits.Kilometers) * 1000;
+
+        //            if (distance > 4)
+        //            {
+        //                journey.Distance += distance;
+        //            }
+        //        }
+
+        //        journey.Distance = Math.Round(journey.Distance, 2);
+        //        await _journeyRepository.UpdateAsync(journey);
+        //    }
+        //}
     }
 }

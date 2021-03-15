@@ -37,7 +37,7 @@
                                             FontFamily="{StaticResource Montserrat-SemiBold}"
                                             FontSize="16"
                                             HorizontalOptions="StartAndExpand"
-                                            Text="{Binding Id}"
+                                            Text="{Binding Distance}"
                                             TextColor="{DynamicResource Gray-900}" />
 
                                         <Label

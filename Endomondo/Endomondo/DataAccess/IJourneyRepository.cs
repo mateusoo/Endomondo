@@ -10,6 +10,8 @@ namespace Endomondo.DataAccess
 
         Task<IEnumerable<Journey>> GetAllAsync();
 
+        Task<IEnumerable<Journey>> GetAllWithLocationsAsync();
+
         Task AddAsync(Journey journey);
 
         Task UpdateAsync(Journey journey);

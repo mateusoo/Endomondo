@@ -26,6 +26,13 @@ namespace Endomondo.DataAccess
             return await _context.Journeys.ToListAsync();
         }
 
+        public async Task<IEnumerable<Journey>> GetAllWithLocationsAsync()
+        {
+            return await _context.Journeys
+                .Include(j => j.Locations)
+                .ToListAsync();
+        }
+
         public async Task AddAsync(Journey journey)
         {
             await _context.AddAsync(journey);
