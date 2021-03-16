@@ -23,6 +23,7 @@ namespace Endomondo.ViewModels
         private readonly IAlarm _alarm;
         private readonly IJourneyRepository _journeyRepository;
         private bool _isBackgroundTaskRunning;
+        private readonly Timer _timer;
 
         public ObservableCollection<TestModel> TestData { get; set; }
 
@@ -42,6 +43,42 @@ namespace Endomondo.ViewModels
             }
         }
 
+        private int _hours;
+
+        public int Hours
+        {
+            get => _hours;
+            set
+            {
+                _hours = value;
+                RaisePropertyChanged("Hours");
+            }
+        }
+
+        private int _minutes;
+
+        public int Minutes
+        {
+            get => _minutes;
+            set
+            {
+                _minutes = value;
+                RaisePropertyChanged("Minutes");
+            }
+        }
+
+        private int _seconds;
+
+        public int Seconds
+        {
+            get => _seconds;
+            set
+            {
+                _seconds = value;
+                RaisePropertyChanged("Seconds");
+            }
+        }
+
         public TrackingPageViewModel(INavigationService navigationService, IAlarm alarm,
             IJourneyRepository journeyRepository)
             : base(navigationService)
@@ -51,6 +88,7 @@ namespace Endomondo.ViewModels
             _isBackgroundTaskRunning = true;
 
             StopCommand = new DelegateCommand(StopAsync);
+            _timer = new Timer();
             TestData = new ObservableCollection<TestModel>();
 
             MessagingCenter.Subscribe<LocationMessage>(this, nameof(LocationMessage),
@@ -65,6 +103,8 @@ namespace Endomondo.ViewModels
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
+            StartTimer();
+
             Journey = new Journey(DateTime.Now);
 
             await _journeyRepository.AddAsync(Journey);
@@ -74,7 +114,11 @@ namespace Endomondo.ViewModels
 
         private async void StopAsync()
         {
+            _timer.Stop();
             _isBackgroundTaskRunning = false;
+
+            Journey.DurationTimeSpan = _timer.Duration;
+            await _journeyRepository.UpdateAsync(Journey);
 
             var navigationParameters = new NavigationParameters
             {
@@ -122,6 +166,21 @@ namespace Endomondo.ViewModels
                 longitude, DistanceUnits.Kilometers) * 1000;
         }
 
+        private void StartTimer()
+        {
+            _timer.Start();
+            _timer.Ticked += OnCountdownTicked;
+        }
+
+        private void OnCountdownTicked()
+        {
+            Seconds = _timer.Duration.Seconds;
+            Hours = _timer.Duration.Hours;
+            Minutes = _timer.Duration.Minutes;
+
+            Journey.DurationTimeSpan = _timer.Duration;
+        }
+
         //private async void CalculateDistanceForExistingJourneys()
         //{
         //    var journeys = await _journeyRepository.GetAllWithLocationsAsync();
@@ -143,6 +202,11 @@ namespace Endomondo.ViewModels
         //            {
         //                journey.Distance += distance;
         //            }
+        //        }
+
+        //        if (journey.Locations.Count > 1)
+        //        {
+        //            journey.DurationTimeSpan = journey.Locations.Last().WriteTime - journey.Locations.First().WriteTime;
         //        }
 
         //        journey.Distance = Math.Round(journey.Distance, 2);

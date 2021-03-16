@@ -45,7 +45,7 @@
                                             FontSize="16"
                                             HorizontalOptions="CenterAndExpand"
                                             HorizontalTextAlignment="Center"
-                                            Text="{Binding DateTime}"
+                                            Text="{Binding StartDateTime}"
                                             TextColor="{DynamicResource Gray-900}" />
 
                                         <ImageButton

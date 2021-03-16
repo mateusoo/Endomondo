@@ -14,6 +14,32 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label 
+                    Grid.Column="0"
+                    Text="{Binding Hours, StringFormat='{0:D2}'}"/>
+                <Label 
+                    Grid.Column="1"
+                    Text=":"/>
+                <Label 
+                    Grid.Column="2"
+                    Text="{Binding Minutes, StringFormat='{0:D2}'}"/>
+                <Label 
+                    Grid.Column="3"
+                    Text=":"/>
+                <Label 
+                    Grid.Column="4"
+                    Text="{Binding Seconds, StringFormat='{0:D2}'}"/>
+            </Grid>
+
             <Label Text="{Binding Distance}"/>
             <Button Command="{Binding StopCommand}" Text="Stop" />
         </StackLayout>
