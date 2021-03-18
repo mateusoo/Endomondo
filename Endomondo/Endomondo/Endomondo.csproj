@@ -12,12 +12,16 @@
 
   <ItemGroup>
     <None Remove="Images\deleteIcon.jpg" />
+    <None Remove="Images\distanceIcon.png" />
     <None Remove="Images\ManRunning.png" />
+    <None Remove="Images\stopwatch.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Images\deleteIcon.jpg" />
+    <EmbeddedResource Include="Images\distanceIcon.png" />
     <EmbeddedResource Include="Images\ManRunning.png" />
+    <EmbeddedResource Include="Images\stopwatch.png" />
   </ItemGroup>
 
   <ItemGroup>
