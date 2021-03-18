@@ -57,6 +57,9 @@ namespace Endomondo.ViewModels
 
         public async void ShowJourneyResultAsync(int journeyId)
         {
+            if (Journeys.FirstOrDefault(j => j.Id == journeyId) == null)
+                return;
+
             var navigationParameters = new NavigationParameters
             {
                 {"journeyId", journeyId}

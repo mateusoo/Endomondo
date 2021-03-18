@@ -25,8 +25,6 @@ namespace Endomondo.ViewModels
         private bool _isBackgroundTaskRunning;
         private readonly Timer _timer;
 
-        public ObservableCollection<TestModel> TestData { get; set; }
-
         public Journey Journey { get; set; }
 
         public DelegateCommand StopCommand { get; }
@@ -89,7 +87,6 @@ namespace Endomondo.ViewModels
 
             StopCommand = new DelegateCommand(StopAsync);
             _timer = new Timer();
-            TestData = new ObservableCollection<TestModel>();
 
             MessagingCenter.Subscribe<LocationMessage>(this, nameof(LocationMessage),
                 message =>
@@ -133,37 +130,37 @@ namespace Endomondo.ViewModels
             if (!_isBackgroundTaskRunning)
                 return;
 
-            Journey.Locations.Add(new Location(locationMessage.Latitude,
-                locationMessage.Longitude, locationMessage.WriteTime));
-
             var distanceFromLatestLocation =
                 CalculateDistanceFromLatestLocation(locationMessage.Latitude, locationMessage.Longitude);
 
-            if (Journey.Locations.Count == 1 || distanceFromLatestLocation > 4)
+            if (Journey.Locations.Count == 0 || distanceFromLatestLocation > 4)
             {
+                Journey.Locations.Add(new Location(locationMessage.Latitude,
+                    locationMessage.Longitude, locationMessage.WriteTime));
+
                 Journey.Distance += distanceFromLatestLocation;
                 Distance = Journey.Distance;
 
                 await _journeyRepository.UpdateAsync(Journey);
             }
 
-            var testText = Journey.Id + " | " + Math.Round(distanceFromLatestLocation, 2) + " | " + locationMessage.WriteTime + " | "
-                           + locationMessage.Latitude + " | " + locationMessage.Longitude;
-            TestData.Add(new TestModel() { Text = testText });
-
             _alarm.SetAlarmForBackgroundServices(DelayTimeInSeconds);
         }
 
         private double CalculateDistanceFromLatestLocation(double latitude, double longitude)
         {
-            var latestLocation = Journey.Locations.OrderBy(l => l.WriteTime).FirstOrDefault();
+           var latestLocation = Journey.Locations
+               .OrderByDescending(l => l.WriteTime)
+               .FirstOrDefault();
 
             if (latestLocation == null)
                 return 0;
 
-            return Xamarin.Essentials.Location.CalculateDistance(latestLocation.Latitude,
+            var distance = Xamarin.Essentials.Location.CalculateDistance(latestLocation.Latitude,
                 latestLocation.Longitude, latitude,
                 longitude, DistanceUnits.Kilometers) * 1000;
+
+            return Math.Round(distance, 2);
         }
 
         private void StartTimer()
