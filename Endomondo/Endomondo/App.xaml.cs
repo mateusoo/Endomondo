@@ -40,6 +40,7 @@ namespace Endomondo
             containerRegistry.RegisterForNavigation<TrackingPage, TrackingPageViewModel>();
             containerRegistry.RegisterForNavigation<ResultPage, ResultPageViewModel>();
             containerRegistry.RegisterForNavigation<HistoryPage, HistoryPageViewModel>();
+            containerRegistry.RegisterForNavigation<SummaryPage, SummaryPageViewModel>();
         }
     }
 }

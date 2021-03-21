@@ -140,7 +140,7 @@ namespace Endomondo.ViewModels
                 {"journeyId", Journey.Id}
             };
 
-            await NavigationService.NavigateAsync("ResultPage", navigationParameters);
+            await NavigationService.NavigateAsync("SummaryPage", navigationParameters);
         }
 
         private async Task HandleNewLocationAsync(LocationMessage locationMessage)

@@ -65,7 +65,7 @@ namespace Endomondo.ViewModels
                 {"journeyId", journeyId}
             };
 
-            await NavigationService.NavigateAsync("ResultPage", navigationParameters);
+            await NavigationService.NavigateAsync("SummaryPage", navigationParameters);
         }
 
         public async void RemoveJourneyAsync(Journey journeyToRemove)
