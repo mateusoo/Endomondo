@@ -41,6 +41,18 @@ namespace Endomondo.ViewModels
             }
         }
 
+        private double _speed;
+
+        public double Speed
+        {
+            get => _speed;
+            set
+            {
+                _speed = value;
+                RaisePropertyChanged("Speed");
+            }
+        }
+
         private int _hours;
 
         public int Hours
@@ -111,10 +123,16 @@ namespace Endomondo.ViewModels
 
         private async void StopAsync()
         {
+            if (Journey.Locations.Count == 0)
+                return;
+
             _timer.Stop();
             _isBackgroundTaskRunning = false;
 
             Journey.DurationTimeSpan = _timer.Duration;
+            Journey.MaxSpeed = Journey.Locations.Max(l => l.Speed);
+            Journey.AverageSpeed = Journey.Distance / Journey.DurationTimeSpan.TotalSeconds;
+
             await _journeyRepository.UpdateAsync(Journey);
 
             var navigationParameters = new NavigationParameters
@@ -135,11 +153,18 @@ namespace Endomondo.ViewModels
 
             if (Journey.Locations.Count == 0 || distanceFromLatestLocation > 4)
             {
-                Journey.Locations.Add(new Location(locationMessage.Latitude,
-                    locationMessage.Longitude, locationMessage.WriteTime));
+                var location = new Location(locationMessage.Latitude,
+                    locationMessage.Longitude, locationMessage.WriteTime);
+
+                location.Speed = CalculateSpeedFromLatestLocation(distanceFromLatestLocation, location.WriteTime);
+
+                Journey.Locations.Add(location);
 
                 Journey.Distance += distanceFromLatestLocation;
                 Distance = Journey.Distance;
+
+                Journey.AverageSpeed = Journey.Distance / Journey.Duration;
+                Speed = Journey.AverageSpeed;
 
                 await _journeyRepository.UpdateAsync(Journey);
             }
@@ -149,9 +174,9 @@ namespace Endomondo.ViewModels
 
         private double CalculateDistanceFromLatestLocation(double latitude, double longitude)
         {
-           var latestLocation = Journey.Locations
-               .OrderByDescending(l => l.WriteTime)
-               .FirstOrDefault();
+            var latestLocation = Journey.Locations
+                .OrderByDescending(l => l.WriteTime)
+                .FirstOrDefault();
 
             if (latestLocation == null)
                 return 0;
@@ -161,6 +186,20 @@ namespace Endomondo.ViewModels
                 longitude, DistanceUnits.Kilometers) * 1000;
 
             return Math.Round(distance, 2);
+        }
+
+        private double CalculateSpeedFromLatestLocation(double distance, DateTime writeTime)
+        {
+            var latestLocation = Journey.Locations
+                .OrderByDescending(l => l.WriteTime)
+                .FirstOrDefault();
+
+            if (latestLocation == null)
+                return 0;
+
+            var speed = distance / (writeTime - latestLocation.WriteTime).TotalSeconds;
+
+            return Math.Round(speed, 2);
         }
 
         private void StartTimer()
@@ -182,32 +221,45 @@ namespace Endomondo.ViewModels
         //{
         //    var journeys = await _journeyRepository.GetAllWithLocationsAsync();
 
-        //    foreach (var journey in journeys)
+        //    try
         //    {
-        //        journey.Distance = 0;
 
-        //        for (int i = 1; i < journey.Locations.Count; i++)
+        //        foreach (var journey in journeys)
         //        {
-        //            var previousLocation = journey.Locations[i - 1];
-        //            var location = journey.Locations[i];
+        //            journey.Distance = 0;
 
-        //            var distance = Xamarin.Essentials.Location.CalculateDistance(previousLocation.Latitude,
-        //                previousLocation.Longitude, location.Latitude,
-        //                location.Longitude, DistanceUnits.Kilometers) * 1000;
-
-        //            if (distance > 4)
+        //            for (int i = 1; i < journey.Locations.Count; i++)
         //            {
-        //                journey.Distance += distance;
+        //                var previousLocation = journey.Locations[i - 1];
+        //                var location = journey.Locations[i];
+
+        //                var distance = Xamarin.Essentials.Location.CalculateDistance(previousLocation.Latitude,
+        //                    previousLocation.Longitude, location.Latitude,
+        //                    location.Longitude, DistanceUnits.Kilometers) * 1000;
+
+        //                location.Speed = distance / (location.WriteTime - previousLocation.WriteTime).TotalSeconds;
+
+        //                if (distance > 4)
+        //                {
+        //                    journey.Distance += distance;
+        //                }
         //            }
-        //        }
 
-        //        if (journey.Locations.Count > 1)
-        //        {
-        //            journey.DurationTimeSpan = journey.Locations.Last().WriteTime - journey.Locations.First().WriteTime;
-        //        }
+        //            if (journey.Locations.Count > 1)
+        //            {
+        //                journey.DurationTimeSpan = journey.Locations.Last().WriteTime - journey.Locations.First().WriteTime;
+        //            }
 
-        //        journey.Distance = Math.Round(journey.Distance, 2);
-        //        await _journeyRepository.UpdateAsync(journey);
+        //            journey.Distance = Math.Round(journey.Distance, 2);
+        //            journey.MaxSpeed = journey.Locations.Max(l => l.Speed);
+        //            journey.AverageSpeed = journey.Distance / journey.DurationTimeSpan.TotalSeconds;
+
+        //            await _journeyRepository.UpdateAsync(journey);
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e);
         //    }
         //}
     }

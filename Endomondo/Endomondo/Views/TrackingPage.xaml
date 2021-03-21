@@ -175,6 +175,13 @@
                                 HorizontalOptions="StartAndExpand"
                                 Text="{Binding Distance, StringFormat='{0:F0} m'}"
                                 TextColor="{DynamicResource Gray-700}" />
+
+                            <Label
+                                FontFamily="{StaticResource Montserrat-Medium}"
+                                FontSize="30"
+                                HorizontalOptions="StartAndExpand"
+                                Text="{Binding Speed, StringFormat='{0:F0} m'}"
+                                TextColor="{DynamicResource Gray-700}" />
                         </StackLayout>
                     </Grid>
                 </control:CustomShadowFrame>

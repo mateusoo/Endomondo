@@ -14,6 +14,14 @@ namespace Endomondo.Models
 
         public double Distance { get; set; }
 
+        public int NumberOfSteps { get; set; }
+
+        public double AverageSpeed { get; set; }
+
+        public double MaxSpeed { get; set; }
+
+        public double BurnedCalories { get; set; }
+
         [NotMapped]
         public TimeSpan DurationTimeSpan
         {

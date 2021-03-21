@@ -12,6 +12,8 @@ namespace Endomondo.Models
 
         public DateTime WriteTime { get; set; }
 
+        public double Speed { get; set; }
+
 
         public int JourneyId { get; set; }
 
