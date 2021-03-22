@@ -59,6 +59,7 @@ namespace Endomondo.Droid
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IAlarm, Alarm>();
+            containerRegistry.RegisterSingleton<IStepCounter, StepCounter>();
         }
     }
 }

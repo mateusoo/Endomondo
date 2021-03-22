@@ -21,8 +21,10 @@ namespace Endomondo.ViewModels
         private const int DelayTimeInSeconds = 20;
 
         private readonly IAlarm _alarm;
+        private readonly IStepCounter _stepCounter;
         private readonly IJourneyRepository _journeyRepository;
         private bool _isBackgroundTaskRunning;
+        private int? _initialNumberOfSteps;
         private readonly Timer _timer;
 
         public Journey Journey { get; set; }
@@ -50,6 +52,18 @@ namespace Endomondo.ViewModels
             {
                 _speed = value;
                 RaisePropertyChanged("Speed");
+            }
+        }
+
+        private int _numberOfSteps;
+
+        public int NumberOfSteps
+        {
+            get => _numberOfSteps;
+            set
+            {
+                _numberOfSteps = value;
+                RaisePropertyChanged("NumberOfSteps");
             }
         }
 
@@ -90,10 +104,11 @@ namespace Endomondo.ViewModels
         }
 
         public TrackingPageViewModel(INavigationService navigationService, IAlarm alarm,
-            IJourneyRepository journeyRepository)
+            IStepCounter stepCounter, IJourneyRepository journeyRepository)
             : base(navigationService)
         {
             _alarm = alarm;
+            _stepCounter = stepCounter;
             _journeyRepository = journeyRepository;
             _isBackgroundTaskRunning = true;
 
@@ -108,8 +123,14 @@ namespace Endomondo.ViewModels
                     HandleNewLocationAsync(message);
                 });
             });
-        }
 
+            if (_stepCounter.IsAvailable())
+            {
+                _stepCounter.StepCountChanged += StepCounter_StepCountChanged;
+                _stepCounter.Start();
+            }
+        }
+        
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             StartTimer();
@@ -127,11 +148,13 @@ namespace Endomondo.ViewModels
                 return;
 
             _timer.Stop();
+            _stepCounter.Stop();
             _isBackgroundTaskRunning = false;
 
             Journey.DurationTimeSpan = _timer.Duration;
             Journey.MaxSpeed = Journey.Locations.Max(l => l.Speed);
             Journey.AverageSpeed = Journey.Distance / Journey.DurationTimeSpan.TotalSeconds;
+            Journey.NumberOfSteps = NumberOfSteps;
 
             await _journeyRepository.UpdateAsync(Journey);
 
@@ -165,6 +188,8 @@ namespace Endomondo.ViewModels
 
                 Journey.AverageSpeed = Journey.Distance / Journey.Duration;
                 Speed = Journey.AverageSpeed;
+
+                Journey.NumberOfSteps = NumberOfSteps;
 
                 await _journeyRepository.UpdateAsync(Journey);
             }
@@ -215,6 +240,19 @@ namespace Endomondo.ViewModels
             Minutes = _timer.Duration.Minutes;
 
             Journey.DurationTimeSpan = _timer.Duration;
+        }
+
+        private void StepCounter_StepCountChanged(object sender, StepCountChangedEventArgs e)
+        {
+            if (e.Value == null)
+                return;
+
+            if (_initialNumberOfSteps == null)
+            {
+                _initialNumberOfSteps = (int)e.Value;
+            }
+
+            NumberOfSteps = (int)e.Value - (int)_initialNumberOfSteps;
         }
 
         //private async void CalculateDistanceForExistingJourneys()

@@ -92,6 +92,7 @@
     <Compile Include="Services\Alarm.cs" />
     <Compile Include="Services\BackgroundReceiver.cs" />
     <Compile Include="Services\BackgroundService.cs" />
+    <Compile Include="Services\StepCounter.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\UIFontIcons.ttf" />

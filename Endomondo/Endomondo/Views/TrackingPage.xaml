@@ -180,7 +180,14 @@
                                 FontFamily="{StaticResource Montserrat-Medium}"
                                 FontSize="30"
                                 HorizontalOptions="StartAndExpand"
-                                Text="{Binding Speed, StringFormat='{0:F0} m'}"
+                                Text="{Binding Speed, StringFormat='  {0:F2}  '}"
+                                TextColor="{DynamicResource Gray-700}" />
+
+                            <Label
+                                FontFamily="{StaticResource Montserrat-Medium}"
+                                FontSize="30"
+                                HorizontalOptions="StartAndExpand"
+                                Text="{Binding NumberOfSteps, StringFormat='  {0:F0}  '}"
                                 TextColor="{DynamicResource Gray-700}" />
                         </StackLayout>
                     </Grid>
