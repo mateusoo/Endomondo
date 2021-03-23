@@ -26,19 +26,94 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
 
             <StackLayout
                 Grid.Row="0"
-                Grid.Column="0"
                 Margin="0,20,0,0"
-                HorizontalOptions="Center"
-                Orientation="Vertical"
-                WidthRequest="500">
+                HorizontalOptions="FillAndExpand"
+                Orientation="Vertical">
+                <control:CustomShadowFrame
+                    Margin="20,20,20,20"
+                    Padding="0"
+                    BackgroundColor="{DynamicResource Gray-White}"
+                    BorderColor="{DynamicResource Gray-White}"
+                    CornerRadius="4"
+                    HasShadow="True"
+                    HeightRequest="100">
+                    <Grid ColumnSpacing="0" RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackLayout
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Padding="0"
+                            Orientation="Horizontal"
+                            Spacing="0">
+                            <Frame
+                                Padding="0"
+                                BackgroundColor="White"
+                                HasShadow="false"
+                                HeightRequest="23"
+                                WidthRequest="23">
+                                <Image
+                                    Margin="1"
+                                    Source="{image:ImageResource Endomondo.Images.stopwatch.png}"
+                                    VerticalOptions="Center" />
+                            </Frame>
+
+                            <Label
+                                FontFamily="{StaticResource Montserrat-SemiBold}"
+                                FontSize="23"
+                                Text="DURATION"
+                                TextColor="{DynamicResource Gray-700}" />
+                        </StackLayout>
+
+                        <StackLayout
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Padding="0"
+                            Orientation="Horizontal"
+                            Spacing="0">
+                            <Label
+                                FontFamily="{StaticResource Montserrat-Medium}"
+                                FontSize="50"
+                                HorizontalOptions="StartAndExpand"
+                                Text="{Binding Hours, StringFormat='{0:D2}:'}"
+                                TextColor="{DynamicResource Gray-700}" />
+
+                            <Label
+                                FontFamily="{StaticResource Montserrat-Medium}"
+                                FontSize="50"
+                                HorizontalOptions="StartAndExpand"
+                                Text="{Binding Minutes, StringFormat='{0:D2}:'}"
+                                TextColor="{DynamicResource Gray-700}" />
+
+                            <Label
+                                FontFamily="{StaticResource Montserrat-Medium}"
+                                FontSize="50"
+                                HorizontalOptions="StartAndExpand"
+                                Text="{Binding Seconds, StringFormat='{0:D2}'}"
+                                TextColor="{DynamicResource Gray-700}" />
+                        </StackLayout>
+                    </Grid>
+                </control:CustomShadowFrame>
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="1"
+                HorizontalOptions="FillAndExpand"
+                Orientation="Vertical">
                 <control:CustomShadowFrame
                     Margin="20,20,20,20"
                     Padding="0"
@@ -67,18 +142,18 @@
                                 Padding="0"
                                 BackgroundColor="White"
                                 HasShadow="false"
-                                HeightRequest="20"
-                                WidthRequest="20">
+                                HeightRequest="25"
+                                WidthRequest="25">
                                 <Image
                                     Margin="1"
-                                    Source="{image:ImageResource Endomondo.Images.stopwatch.png}"
+                                    Source="{image:ImageResource Endomondo.Images.distanceIcon.png}"
                                     VerticalOptions="Center" />
                             </Frame>
 
                             <Label
                                 FontFamily="{StaticResource Montserrat-SemiBold}"
-                                FontSize="14"
-                                Text="DURATION"
+                                FontSize="20"
+                                Text="DISTANCE"
                                 TextColor="{DynamicResource Gray-700}" />
                         </StackLayout>
 
@@ -92,21 +167,7 @@
                                 FontFamily="{StaticResource Montserrat-Medium}"
                                 FontSize="40"
                                 HorizontalOptions="StartAndExpand"
-                                Text="{Binding Hours, StringFormat='{0:D2}:'}"
-                                TextColor="{DynamicResource Gray-700}" />
-
-                            <Label
-                                FontFamily="{StaticResource Montserrat-Medium}"
-                                FontSize="40"
-                                HorizontalOptions="StartAndExpand"
-                                Text="{Binding Minutes, StringFormat='{0:D2}:'}"
-                                TextColor="{DynamicResource Gray-700}" />
-
-                            <Label
-                                FontFamily="{StaticResource Montserrat-Medium}"
-                                FontSize="40"
-                                HorizontalOptions="StartAndExpand"
-                                Text="{Binding Seconds, StringFormat='{0:D2}'}"
+                                Text="{Binding Distance, StringFormat='{0:F0} m'}"
                                 TextColor="{DynamicResource Gray-700}" />
                         </StackLayout>
                     </Grid>
@@ -114,12 +175,9 @@
             </StackLayout>
 
             <StackLayout
-                Grid.Row="1"
-                Grid.Column="0"
-                Margin="0,10,0,0"
-                HorizontalOptions="Center"
-                Orientation="Vertical"
-                WidthRequest="500">
+                Grid.Row="2"
+                HorizontalOptions="FillAndExpand"
+                Orientation="Vertical">
                 <control:CustomShadowFrame
                     Margin="20,20,20,20"
                     Padding="0"
@@ -127,7 +185,7 @@
                     BorderColor="{DynamicResource Gray-White}"
                     CornerRadius="4"
                     HasShadow="True"
-                    HeightRequest="60">
+                    HeightRequest="80">
                     <Grid ColumnSpacing="0" RowSpacing="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -148,18 +206,18 @@
                                 Padding="0"
                                 BackgroundColor="White"
                                 HasShadow="false"
-                                HeightRequest="20"
-                                WidthRequest="20">
+                                HeightRequest="25"
+                                WidthRequest="25">
                                 <Image
                                     Margin="1"
-                                    Source="{image:ImageResource Endomondo.Images.distanceIcon.png}"
+                                    Source="{image:ImageResource Endomondo.Images.speedIcon.png}"
                                     VerticalOptions="Center" />
                             </Frame>
 
                             <Label
                                 FontFamily="{StaticResource Montserrat-SemiBold}"
-                                FontSize="14"
-                                Text="DISTANCE"
+                                FontSize="20"
+                                Text="SPEED"
                                 TextColor="{DynamicResource Gray-700}" />
                         </StackLayout>
 
@@ -171,31 +229,87 @@
                             Spacing="0">
                             <Label
                                 FontFamily="{StaticResource Montserrat-Medium}"
-                                FontSize="30"
+                                FontSize="40"
                                 HorizontalOptions="StartAndExpand"
-                                Text="{Binding Distance, StringFormat='{0:F0} m'}"
+                                Text="{Binding Speed, StringFormat='{0:F2}'}"
                                 TextColor="{DynamicResource Gray-700}" />
-
                             <Label
                                 FontFamily="{StaticResource Montserrat-Medium}"
                                 FontSize="30"
                                 HorizontalOptions="StartAndExpand"
-                                Text="{Binding Speed, StringFormat='  {0:F2}  '}"
-                                TextColor="{DynamicResource Gray-700}" />
+                                Text=" m/s"
+                                TextColor="{DynamicResource Gray-700}"
+                                VerticalOptions="End" />
+                        </StackLayout>
+                    </Grid>
+                </control:CustomShadowFrame>
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="3"
+                HorizontalOptions="FillAndExpand"
+                Orientation="Vertical">
+                <control:CustomShadowFrame
+                    Margin="20,20,20,20"
+                    Padding="0"
+                    BackgroundColor="{DynamicResource Gray-White}"
+                    BorderColor="{DynamicResource Gray-White}"
+                    CornerRadius="4"
+                    HasShadow="True"
+                    HeightRequest="80">
+                    <Grid ColumnSpacing="0" RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackLayout
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Padding="0"
+                            Orientation="Horizontal"
+                            Spacing="0">
+                            <Frame
+                                Padding="0"
+                                BackgroundColor="White"
+                                HasShadow="false"
+                                HeightRequest="25"
+                                WidthRequest="25">
+                                <Image
+                                    Margin="1"
+                                    Source="{image:ImageResource Endomondo.Images.footIcon.png}"
+                                    VerticalOptions="Center" />
+                            </Frame>
 
                             <Label
+                                FontFamily="{StaticResource Montserrat-SemiBold}"
+                                FontSize="20"
+                                Text="STEPS NUMBER"
+                                TextColor="{DynamicResource Gray-700}" />
+                        </StackLayout>
+
+                        <StackLayout
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Padding="0"
+                            Orientation="Horizontal"
+                            Spacing="0">
+                            <Label
                                 FontFamily="{StaticResource Montserrat-Medium}"
-                                FontSize="30"
+                                FontSize="40"
                                 HorizontalOptions="StartAndExpand"
-                                Text="{Binding NumberOfSteps, StringFormat='  {0:F0}  '}"
+                                Text="{Binding NumberOfSteps, StringFormat='{0:F0}'}"
                                 TextColor="{DynamicResource Gray-700}" />
                         </StackLayout>
                     </Grid>
                 </control:CustomShadowFrame>
             </StackLayout>
             <StackLayout
-                Grid.Row="2"
-                Grid.Column="0"
+                Grid.Row="4"
                 Margin="0,50,0,0"
                 HorizontalOptions="Center"
                 Orientation="Vertical"

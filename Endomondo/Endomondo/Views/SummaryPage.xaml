@@ -1,11 +1,166 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Endomondo.Views.SummaryPage">
-    <StackLayout>
-        <Label Text="{Binding Journey.Distance}"/>
-        <Button Text="Show route"  Command="{Binding ShowRouteCommand}"/>
+<ContentPage
+    x:Class="Endomondo.Views.SummaryPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:control="clr-namespace:Endomondo.Controls"
+    xmlns:image="clr-namespace:Endomondo.Images"
+    xmlns:prism="http://prismlibrary.com"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{DynamicResource Gray-200}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout Spacing="0">
+        <control:CustomShadowFrame
+            Margin="20,20,20,20"
+            Padding="0"
+            BackgroundColor="{DynamicResource Gray-White}"
+            BorderColor="{DynamicResource Gray-White}"
+            CornerRadius="10"
+            HasShadow="True">
+            <Grid ColumnSpacing="0" RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="10,5,0,0"
+                    FontFamily="{StaticResource Montserrat-Medium}"
+                    FontSize="20"
+                    HorizontalOptions="StartAndExpand"
+                    Text="Summary"
+                    TextColor="{DynamicResource Gray-700}" />
+
+                <Image
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Margin="5,10,0,0"
+                    Source="{image:ImageResource Endomondo.Images.stopwatch.png}"
+                    VerticalOptions="Center" />
+
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="5,10,0,0"
+                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                    FontSize="15"
+                    Text="DURATION"
+                    TextColor="{DynamicResource Gray-400}" />
+
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                    FontSize="20"
+                    Text="{Binding Journey.Duration}"
+                    TextColor="{DynamicResource Gray-700}" />
+
+                <Image
+                    Grid.Row="3"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Margin="5,10,0,0"
+                    Source="{image:ImageResource Endomondo.Images.distanceIcon.png}"
+                    VerticalOptions="Center" />
+
+                <Label
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="5,10,0,0"
+                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                    FontSize="15"
+                    Text="DISTANCE"
+                    TextColor="{DynamicResource Gray-400}" />
+
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                    FontSize="20"
+                    Text="{Binding Journey.Distance}"
+                    TextColor="{DynamicResource Gray-700}" />
+
+                <Image
+                    Grid.Row="5"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Margin="5,10,0,0"
+                    Source="{image:ImageResource Endomondo.Images.speedIcon.png}"
+                    VerticalOptions="Center" />
+
+                <Label
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Margin="5,10,0,0"
+                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                    FontSize="15"
+                    Text="SPEED"
+                    TextColor="{DynamicResource Gray-400}" />
+
+                <Label
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                    FontSize="20"
+                    Text="{Binding Journey.AverageSpeed}"
+                    TextColor="{DynamicResource Gray-700}" />
+
+                <Image
+                    Grid.Row="7"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Margin="5"
+                    Source="{image:ImageResource Endomondo.Images.footIcon.png}"
+                    VerticalOptions="Center" />
+
+                <Label
+                    Grid.Row="7"
+                    Grid.Column="1"
+                    Margin="5,10,0,0"
+                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                    FontSize="15"
+                    Text="STEPS"
+                    TextColor="{DynamicResource Gray-400}" />
+
+                <Label
+                    Grid.Row="8"
+                    Grid.Column="1"
+                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                    FontSize="20"
+                    Text="{Binding Journey.NumberOfSteps}"
+                    TextColor="{DynamicResource Gray-700}" />
+
+            </Grid>
+        </control:CustomShadowFrame>
+        <buttons:SfButton
+            Margin="10,10,10,10"
+            Command="{Binding ShowRouteCommand}"
+            CornerRadius="20"
+            Style="{StaticResource SfButtonStyle}"
+            Text="Show route" />
     </StackLayout>
 </ContentPage>

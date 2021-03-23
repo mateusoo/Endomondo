@@ -25,7 +25,7 @@ namespace Endomondo.Droid.Services
                 try
                 {
                     var locator = new GeolocationRequest(GeolocationAccuracy.Best, 
-                        TimeSpan.FromSeconds(10));
+                        TimeSpan.FromSeconds(20));
                     var position = await Geolocation.GetLocationAsync(locator);
 
                     var message = new LocationMessage()
