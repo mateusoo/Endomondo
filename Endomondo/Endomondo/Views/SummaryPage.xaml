@@ -71,13 +71,33 @@
                     Text="DURATION"
                     TextColor="{DynamicResource Gray-400}" />
 
-                <Label
+                <StackLayout
                     Grid.Row="2"
                     Grid.Column="1"
-                    FontFamily="{StaticResource Montserrat-SemiBold}"
-                    FontSize="20"
-                    Text="{Binding Journey.Duration}"
-                    TextColor="{DynamicResource Gray-700}" />
+                    Padding="0"
+                    Orientation="Horizontal"
+                    Spacing="0">
+                    <Label
+                        FontFamily="{StaticResource Montserrat-Medium}"
+                        FontSize="20"
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding Hours, StringFormat='{0:D2}:'}"
+                        TextColor="{DynamicResource Gray-700}" />
+
+                    <Label
+                        FontFamily="{StaticResource Montserrat-Medium}"
+                        FontSize="20"
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding Minutes, StringFormat='{0:D2}:'}"
+                        TextColor="{DynamicResource Gray-700}" />
+
+                    <Label
+                        FontFamily="{StaticResource Montserrat-Medium}"
+                        FontSize="20"
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding Seconds, StringFormat='{0:D2}'}"
+                        TextColor="{DynamicResource Gray-700}" />
+                </StackLayout>
 
                 <Image
                     Grid.Row="3"
@@ -101,7 +121,7 @@
                     Grid.Column="1"
                     FontFamily="{StaticResource Montserrat-SemiBold}"
                     FontSize="20"
-                    Text="{Binding Journey.Distance}"
+                    Text="{Binding Journey.Distance, StringFormat='{0:F0} m'}"
                     TextColor="{DynamicResource Gray-700}" />
 
                 <Image
@@ -126,7 +146,7 @@
                     Grid.Column="1"
                     FontFamily="{StaticResource Montserrat-SemiBold}"
                     FontSize="20"
-                    Text="{Binding Journey.AverageSpeed}"
+                    Text="{Binding Journey.AverageSpeed, StringFormat='{0:F2} m'}"
                     TextColor="{DynamicResource Gray-700}" />
 
                 <Image

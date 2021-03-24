@@ -27,6 +27,42 @@ namespace Endomondo.ViewModels
             }
         }
 
+        private int _hours;
+
+        public int Hours
+        {
+            get => _hours;
+            set
+            {
+                _hours = value;
+                RaisePropertyChanged("Hours");
+            }
+        }
+
+        private int _minutes;
+
+        public int Minutes
+        {
+            get => _minutes;
+            set
+            {
+                _minutes = value;
+                RaisePropertyChanged("Minutes");
+            }
+        }
+
+        private int _seconds;
+
+        public int Seconds
+        {
+            get => _seconds;
+            set
+            {
+                _seconds = value;
+                RaisePropertyChanged("Seconds");
+            }
+        }
+
         public SummaryPageViewModel(INavigationService navigationService, 
             IJourneyRepository journeyRepository)
             : base(navigationService)
@@ -41,6 +77,10 @@ namespace Endomondo.ViewModels
             var journeyId = parameters.GetValue<int>("journeyId");
 
             Journey = await _journeyRepository.GetAsync(journeyId);
+
+            Hours = Journey.DurationTimeSpan.Hours;
+            Minutes = Journey.DurationTimeSpan.Minutes;
+            Seconds = Journey.DurationTimeSpan.Seconds;
         }
 
         public async void NavigateHomeAsync()
