@@ -15,6 +15,7 @@
     <None Remove="Images\distanceIcon.png" />
     <None Remove="Images\footIcon.png" />
     <None Remove="Images\ManRunning.png" />
+    <None Remove="Images\maxSpeedIcon.png" />
     <None Remove="Images\r1.png" />
     <None Remove="Images\r2.png" />
     <None Remove="Images\r3.png" />
@@ -27,6 +28,7 @@
     <EmbeddedResource Include="Images\distanceIcon.png" />
     <EmbeddedResource Include="Images\footIcon.png" />
     <EmbeddedResource Include="Images\ManRunning.png" />
+    <EmbeddedResource Include="Images\maxSpeedIcon.png" />
     <EmbeddedResource Include="Images\speedIcon.png" />
     <EmbeddedResource Include="Images\stopwatch.png" />
   </ItemGroup>

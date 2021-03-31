@@ -18,7 +18,7 @@ namespace Endomondo.ViewModels
 {
     public class TrackingPageViewModel : ViewModelBase
     {
-        private const int DelayTimeInSeconds = 20;
+        private const int DelayTimeInSeconds = 5;
 
         private readonly IAlarm _alarm;
         private readonly IStepCounter _stepCounter;
