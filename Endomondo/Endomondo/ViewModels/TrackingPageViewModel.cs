@@ -254,51 +254,5 @@ namespace Endomondo.ViewModels
 
             NumberOfSteps = (int)e.Value - (int)_initialNumberOfSteps;
         }
-
-        //private async void CalculateDistanceForExistingJourneys()
-        //{
-        //    var journeys = await _journeyRepository.GetAllWithLocationsAsync();
-
-        //    try
-        //    {
-
-        //        foreach (var journey in journeys)
-        //        {
-        //            journey.Distance = 0;
-
-        //            for (int i = 1; i < journey.Locations.Count; i++)
-        //            {
-        //                var previousLocation = journey.Locations[i - 1];
-        //                var location = journey.Locations[i];
-
-        //                var distance = Xamarin.Essentials.Location.CalculateDistance(previousLocation.Latitude,
-        //                    previousLocation.Longitude, location.Latitude,
-        //                    location.Longitude, DistanceUnits.Kilometers) * 1000;
-
-        //                location.Speed = distance / (location.WriteTime - previousLocation.WriteTime).TotalSeconds;
-
-        //                if (distance > 4)
-        //                {
-        //                    journey.Distance += distance;
-        //                }
-        //            }
-
-        //            if (journey.Locations.Count > 1)
-        //            {
-        //                journey.DurationTimeSpan = journey.Locations.Last().WriteTime - journey.Locations.First().WriteTime;
-        //            }
-
-        //            journey.Distance = Math.Round(journey.Distance, 2);
-        //            journey.MaxSpeed = journey.Locations.Max(l => l.Speed);
-        //            journey.AverageSpeed = journey.Distance / journey.DurationTimeSpan.TotalSeconds;
-
-        //            await _journeyRepository.UpdateAsync(journey);
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e);
-        //    }
-        //}
     }
 }
